@@ -1,219 +1,1031 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libra | Library Management System</title>
 
-    <title>Modern Landing Page</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-        body {
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+:root{
+--navy:#142b3b;
+--navy2:#1c3b4e;
+--gold:#c49b59;
+--bg:#f5f6f8;
+--white:#fff;
+--text:#263746;
+--muted:#8996a3;
+--border:#e9edf0;
+--green:#2e9c77;
+}
 
-            background: linear-gradient(
-                135deg,
-                #0f172a,
-                #1e1b4b,
-                #312e81
-            );
-            color: white;
-        }
+body{
+font-family:'DM Sans',sans-serif;
+background:var(--bg);
+color:var(--text);
+}
 
-        /* Background circles */
+.app{display:flex;min-height:100vh}
 
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(5px);
-            opacity: 0.6;
-            animation: float 6s ease-in-out infinite;
-        }
+/* SIDEBAR */
 
-        .circle1 {
-            width: 250px;
-            height: 250px;
-            background: #8b5cf6;
-            top: -80px;
-            left: -80px;
-        }
+.sidebar{
+width:250px;
+background:var(--navy);
+color:white;
+position:fixed;
+height:100vh;
+padding:28px 18px;
+display:flex;
+flex-direction:column;
+z-index:10;
+}
 
-        .circle2 {
-            width: 300px;
-            height: 300px;
-            background: #06b6d4;
-            bottom: -120px;
-            right: -100px;
-            animation-delay: 2s;
-        }
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+padding:0 12px 38px;
+}
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
+.logo-icon{
+width:40px;height:40px;
+background:var(--gold);
+border-radius:10px;
+display:grid;
+place-items:center;
+font-size:19px;
+color:var(--navy);
+}
 
-            50% {
-                transform: translateY(-30px);
-            }
-        }
+.logo h2{
+font-family:'Playfair Display',serif;
+font-size:24px;
+letter-spacing:.5px;
+}
 
-        /* Main Card */
+.logo h2 span{color:var(--gold)}
 
-        .card {
-            position: relative;
-            width: 90%;
-            max-width: 500px;
-            padding: 50px 35px;
+.menu-label{
+font-size:10px;
+color:#8296a5;
+letter-spacing:1.5px;
+padding:0 13px;
+margin-bottom:13px;
+}
 
-            text-align: center;
+.menu{list-style:none}
 
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
+.menu li{
+margin-bottom:5px;
+}
 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+.menu a{
+display:flex;
+align-items:center;
+gap:14px;
+padding:13px 15px;
+border-radius:8px;
+text-decoration:none;
+color:#aebdca;
+font-size:13px;
+transition:.25s;
+cursor:pointer;
+}
 
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+.menu a i{width:18px;font-size:15px}
 
-            animation: appear 1s ease;
-        }
+.menu a:hover,.menu a.active{
+background:#ffffff14;
+color:white;
+}
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
+.menu a.active{
+border-left:3px solid var(--gold);
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.menu a.active i{color:var(--gold)}
 
-        .icon {
-            font-size: 55px;
-            margin-bottom: 15px;
-        }
+.sidebar-bottom{
+margin-top:auto;
+background:#ffffff0c;
+padding:17px;
+border-radius:10px;
+}
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
+.sidebar-bottom p{
+font-size:11px;
+color:#aebdca;
+line-height:1.7;
+}
 
-            background: linear-gradient(
-                90deg,
-                #fff,
-                #c4b5fd,
-                #67e8f9
-            );
+.sidebar-bottom strong{
+display:block;
+color:white;
+margin-bottom:6px;
+}
 
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* MAIN */
 
-        p {
-            color: #dbeafe;
-            font-size: 17px;
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
+.main{
+margin-left:250px;
+width:calc(100% - 250px);
+}
 
-        /* Button */
+.topbar{
+height:76px;
+background:white;
+border-bottom:1px solid var(--border);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 38px;
+}
 
-        .btn {
-            display: inline-block;
-            padding: 14px 30px;
+.breadcrumb{
+font-size:12px;
+color:var(--muted);
+}
 
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
+.breadcrumb strong{color:var(--text)}
 
-            border-radius: 30px;
+.top-actions{
+display:flex;
+align-items:center;
+gap:22px;
+}
 
-            background: linear-gradient(
-                90deg,
-                #6366f1,
-                #8b5cf6
-            );
+.search{
+background:#f5f6f8;
+padding:10px 14px;
+border-radius:8px;
+display:flex;
+gap:9px;
+align-items:center;
+}
 
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+.search input{
+border:none;
+background:transparent;
+outline:none;
+font-family:inherit;
+width:170px;
+font-size:12px;
+}
 
-            transition: 0.3s ease;
-        }
+.notification{
+position:relative;
+color:#617180;
+font-size:17px;
+}
 
-        .btn:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.6);
-        }
+.notification:after{
+content:'';
+position:absolute;
+width:6px;height:6px;
+background:#df795e;
+border-radius:50%;
+top:-3px;right:-3px;
+}
 
-        .btn:active {
-            transform: scale(0.95);
-        }
+.profile{
+display:flex;
+align-items:center;
+gap:10px;
+}
 
-        /* Small text */
+.avatar{
+width:36px;height:36px;
+background:#e9dfcf;
+border-radius:50%;
+display:grid;
+place-items:center;
+color:#715b3b;
+font-weight:700;
+font-size:12px;
+}
 
-        .footer {
-            margin-top: 30px;
-            font-size: 13px;
-            color: #cbd5e1;
-        }
+.profile-info strong{font-size:12px;display:block}
+.profile-info span{font-size:10px;color:var(--muted)}
 
-        /* Mobile */
+/* CONTENT */
 
-        @media (max-width: 500px) {
+.content{padding:35px 38px}
 
-            .card {
-                padding: 40px 25px;
-            }
+.welcome{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
 
-            h1 {
-                font-size: 34px;
-            }
+.welcome h1{
+font-family:'Playfair Display',serif;
+font-size:29px;
+color:var(--navy);
+}
 
-            p {
-                font-size: 15px;
-            }
-        }
-    </style>
+.welcome p{
+color:var(--muted);
+font-size:12px;
+margin-top:7px;
+}
+
+.date{
+background:white;
+border:1px solid var(--border);
+padding:11px 15px;
+border-radius:7px;
+font-size:11px;
+color:#657482;
+}
+
+/* STATISTICS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-bottom:28px;
+}
+
+.stat{
+background:white;
+border:1px solid var(--border);
+border-radius:10px;
+padding:22px;
+transition:.3s;
+animation:appear .6s ease;
+}
+
+.stat:hover{
+transform:translateY(-5px);
+box-shadow:0 12px 30px #142b3b0d;
+}
+
+.stat-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.stat-icon{
+width:39px;height:39px;
+border-radius:9px;
+display:grid;
+place-items:center;
+font-size:15px;
+}
+
+.gold{background:#f7f0e4;color:#b48b4b}
+.blue{background:#e9f2f8;color:#4786a8}
+.green{background:#e7f5ef;color:#339b74}
+.pink{background:#faedf0;color:#bb7084}
+
+.stat h2{
+font-size:27px;
+margin-top:17px;
+color:var(--navy);
+}
+
+.stat p{
+font-size:11px;
+color:var(--muted);
+margin-top:5px;
+}
+
+.change{
+font-size:10px;
+color:var(--green);
+margin-top:13px;
+}
+
+/* PANELS */
+
+.panel{
+background:white;
+border:1px solid var(--border);
+border-radius:10px;
+padding:24px;
+}
+
+.panel-heading{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:23px;
+}
+
+.panel-heading h3{
+font-size:15px;
+color:var(--navy);
+}
+
+.panel-heading p{
+font-size:11px;
+color:var(--muted);
+margin-top:5px;
+}
+
+.view-btn{
+border:1px solid var(--border);
+background:white;
+padding:8px 13px;
+border-radius:6px;
+font-size:11px;
+cursor:pointer;
+color:var(--text);
+}
+
+.middle{
+display:grid;
+grid-template-columns:1.5fr 1fr;
+gap:20px;
+margin-bottom:25px;
+}
+
+/* CHART */
+
+.chart{
+height:190px;
+display:flex;
+align-items:end;
+justify-content:space-around;
+border-bottom:1px solid var(--border);
+padding:0 5px;
+position:relative;
+background:repeating-linear-gradient(to bottom,transparent 0px,transparent 46px,#edf0f2 47px);
+}
+
+.bar-group{
+height:100%;
+display:flex;
+align-items:end;
+gap:5px;
+position:relative;
+}
+
+.bar{
+width:13px;
+border-radius:4px 4px 0 0;
+background:#d9c39c;
+transition:.3s;
+animation:grow 1s ease;
+}
+
+.bar.dark{background:var(--navy)}
+
+.bar:hover{background:var(--gold)}
+
+.chart-labels{
+display:flex;
+justify-content:space-around;
+margin-top:12px;
+font-size:10px;
+color:var(--muted);
+}
+
+/* CIRCULAR */
+
+.category-layout{
+display:flex;
+align-items:center;
+justify-content:space-around;
+gap:20px;
+}
+
+.donut{
+width:145px;
+height:145px;
+border-radius:50%;
+background:conic-gradient(
+#c49b59 0% 38%,
+#355d72 38% 65%,
+#80a89a 65% 83%,
+#d6dce0 83% 100%
+);
+display:grid;
+place-items:center;
+position:relative;
+}
+
+.donut:before{
+content:'';
+position:absolute;
+width:100px;height:100px;
+background:white;
+border-radius:50%;
+}
+
+.donut-center{
+z-index:1;
+text-align:center;
+}
+
+.donut-center strong{
+font-size:23px;
+color:var(--navy);
+display:block;
+}
+
+.donut-center span{
+font-size:9px;
+color:var(--muted);
+}
+
+.legend{display:grid;gap:13px}
+
+.legend-item{
+display:flex;
+align-items:center;
+gap:9px;
+font-size:10px;
+color:#647482;
+}
+
+.dot{width:8px;height:8px;border-radius:3px}
+
+/* BOOK TABLE */
+
+.table-panel{margin-bottom:25px}
+
+.table-wrap{overflow-x:auto}
+
+table{
+width:100%;
+border-collapse:collapse;
+text-align:left;
+white-space:nowrap;
+}
+
+th{
+font-size:10px;
+color:#95a0aa;
+font-weight:500;
+padding:13px 10px;
+border-bottom:1px solid var(--border);
+}
+
+td{
+padding:13px 10px;
+border-bottom:1px solid #f0f2f4;
+font-size:11px;
+}
+
+.book-cell{
+display:flex;
+align-items:center;
+gap:11px;
+}
+
+.mini-cover{
+width:34px;height:43px;
+border-radius:4px;
+display:grid;
+place-items:center;
+font-size:17px;
+}
+
+.book-cell strong{display:block;font-size:11px}
+.book-cell span{font-size:10px;color:var(--muted)}
+
+.status{
+padding:6px 10px;
+border-radius:20px;
+font-size:9px;
+}
+
+.issued{background:#fff3df;color:#b78b3e}
+.available{background:#e7f5ef;color:#31966e}
+.overdue{background:#fae9e9;color:#c66b6b}
+
+.action{
+border:none;
+background:transparent;
+color:#71808c;
+cursor:pointer;
+font-size:13px;
+}
+
+/* LOWER */
+
+.lower{
+display:grid;
+grid-template-columns:1.2fr 1fr;
+gap:20px;
+}
+
+.activity{
+display:flex;
+gap:13px;
+padding:13px 0;
+border-bottom:1px solid #f0f2f4;
+}
+
+.activity-icon{
+width:34px;height:34px;
+background:#f5f0e6;
+color:#ae8c53;
+border-radius:8px;
+display:grid;
+place-items:center;
+font-size:12px;
+flex-shrink:0;
+}
+
+.activity strong{font-size:11px;display:block}
+.activity p{font-size:10px;color:var(--muted);margin-top:4px}
+.activity time{font-size:9px;color:#a3adb6;margin-left:auto;white-space:nowrap}
+
+.quick-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.quick{
+border:1px solid var(--border);
+padding:19px 12px;
+border-radius:8px;
+text-align:center;
+cursor:pointer;
+transition:.3s;
+background:white;
+}
+
+.quick:hover{
+border-color:var(--gold);
+background:#fcfaf6;
+transform:translateY(-3px);
+}
+
+.quick i{
+font-size:20px;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.quick strong{display:block;font-size:11px}
+.quick span{font-size:9px;color:var(--muted)}
+
+/* FOOTER */
+
+footer{
+padding:22px 38px;
+color:#a2acb5;
+font-size:10px;
+display:flex;
+justify-content:space-between;
+}
+
+@keyframes appear{
+from{opacity:0;transform:translateY(15px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes grow{
+from{height:0}
+}
+
+@media(max-width:1100px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.middle{grid-template-columns:1fr}
+}
+
+@media(max-width:750px){
+.sidebar{width:68px;padding:25px 9px}
+.logo{padding:0 5px 35px}
+.logo h2,.menu-label,.menu a span,.sidebar-bottom{display:none}
+.menu a{justify-content:center;padding:15px 0}
+.menu a i{font-size:17px}
+.main{margin-left:68px;width:calc(100% - 68px)}
+.topbar{padding:0 15px}
+.content{padding:25px 15px}
+.search{display:none}
+.profile-info{display:none}
+.welcome h1{font-size:23px}
+.stats{gap:10px}
+.stat{padding:15px}
+.stat h2{font-size:22px}
+.lower{grid-template-columns:1fr}
+footer{padding:20px 15px;gap:10px;flex-wrap:wrap}
+}
+
+@media(max-width:420px){
+.stats{grid-template-columns:1fr 1fr}
+.date{display:none}
+}
+</style>
 </head>
 
 <body>
 
-    <div class="circle circle1"></div>
-    <div class="circle circle2"></div>
+<div class="app">
 
-    <div class="card">
+<aside class="sidebar">
 
-        <div class="icon">🚀</div>
+<div class="logo">
+<div class="logo-icon"><i class="fa-solid fa-book-open"></i></div>
+<h2>Libra<span>.</span></h2>
+</div>
 
-        <h1>Welcome!</h1>
+<div class="menu-label">MAIN MENU</div>
 
-        <p>
-            Welcome to my modern website.
-            This is a simple HTML page with
-            beautiful animations and a glassmorphism design.
-        </p>
+<ul class="menu">
+<li><a class="active" href="#dashboard"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a></li>
+<li><a href="#inventory"><i class="fa-solid fa-book"></i><span>Book Inventory</span></a></li>
+<li><a href="#members"><i class="fa-solid fa-users"></i><span>Members</span></a></li>
+<li><a href="#transactions"><i class="fa-solid fa-arrow-right-arrow-left"></i><span>Issue & Return</span></a></li>
+<li><a href="#reports"><i class="fa-solid fa-chart-pie"></i><span>Reports & Analytics</span></a></li>
+</ul>
 
-        <a href="#" class="btn">
-            Get Started →
-        </a>
+<br>
+<div class="menu-label">MANAGEMENT</div>
 
-        <div class="footer">
-            Made with ❤️ using HTML & CSS
-        </div>
+<ul class="menu">
+<li><a href="#settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+<li><a href="#help"><i class="fa-regular fa-circle-question"></i><span>Help & Support</span></a></li>
+</ul>
 
-    </div>
+<div class="sidebar-bottom">
+<strong><i class="fa-solid fa-building-columns"></i> Libra University</strong>
+<p>Smart Library Management System<br>Academic Session 2026–27</p>
+</div>
+
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+<div class="breadcrumb">Pages / <strong>Dashboard</strong></div>
+
+<div class="top-actions">
+<div class="search">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input id="globalSearch" placeholder="Search anything...">
+</div>
+
+<div class="notification"><i class="fa-regular fa-bell"></i></div>
+
+<div class="profile">
+<div class="avatar">AD</div>
+<div class="profile-info">
+<strong>Admin User</strong>
+<span>Library Administrator</span>
+</div>
+<i class="fa-solid fa-chevron-down" style="font-size:10px;color:#8996a3"></i>
+</div>
+</div>
+</div>
+
+<div class="content" id="dashboard">
+
+<div class="welcome">
+<div>
+<h1>Good Morning, Admin 👋</h1>
+<p>Here's what's happening in your library today.</p>
+</div>
+<div class="date" id="date"></div>
+</div>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-top">
+<span style="font-size:11px;color:#82909c">Total Books</span>
+<div class="stat-icon gold"><i class="fa-solid fa-book-open"></i></div>
+</div>
+<h2 id="totalBooks">12,480</h2>
+<p>Books in collection</p>
+<div class="change"><i class="fa-solid fa-arrow-up"></i> 8.2% this month</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<span style="font-size:11px;color:#82909c">Active Members</span>
+<div class="stat-icon blue"><i class="fa-solid fa-users"></i></div>
+</div>
+<h2>3,842</h2>
+<p>Registered students</p>
+<div class="change"><i class="fa-solid fa-arrow-up"></i> 12.5% this month</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<span style="font-size:11px;color:#82909c">Books Issued</span>
+<div class="stat-icon green"><i class="fa-solid fa-book-bookmark"></i></div>
+</div>
+<h2 id="issuedCount">856</h2>
+<p>Currently borrowed</p>
+<div class="change">Active transactions</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<span style="font-size:11px;color:#82909c">Overdue Books</span>
+<div class="stat-icon pink"><i class="fa-solid fa-clock"></i></div>
+</div>
+<h2>24</h2>
+<p>Require attention</p>
+<div style="font-size:10px;color:#c66b6b;margin-top:13px">Needs follow-up</div>
+</div>
+
+</div>
+
+<!-- ANALYTICS -->
+
+<div class="middle" id="reports">
+
+<div class="panel">
+<div class="panel-heading">
+<div>
+<h3>Library Activity</h3>
+<p>Monthly borrowing overview</p>
+</div>
+<button class="view-btn">Last 6 Months <i class="fa-solid fa-chevron-down"></i></button>
+</div>
+
+<div class="chart">
+
+<div class="bar-group"><div class="bar" style="height:45%"></div><div class="bar dark" style="height:65%"></div></div>
+<div class="bar-group"><div class="bar" style="height:55%"></div><div class="bar dark" style="height:75%"></div></div>
+<div class="bar-group"><div class="bar" style="height:40%"></div><div class="bar dark" style="height:58%"></div></div>
+<div class="bar-group"><div class="bar" style="height:70%"></div><div class="bar dark" style="height:88%"></div></div>
+<div class="bar-group"><div class="bar" style="height:50%"></div><div class="bar dark" style="height:72%"></div></div>
+<div class="bar-group"><div class="bar" style="height:78%"></div><div class="bar dark" style="height:95%"></div></div>
+
+</div>
+
+<div class="chart-labels">
+<span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-heading">
+<div>
+<h3>Book Categories</h3>
+<p>Collection distribution</p>
+</div>
+</div>
+
+<div class="category-layout">
+<div class="donut">
+<div class="donut-center"><strong>12.4K</strong><span>Total Books</span></div>
+</div>
+
+<div class="legend">
+<div class="legend-item"><span class="dot" style="background:#c49b59"></span> Fiction</div>
+<div class="legend-item"><span class="dot" style="background:#355d72"></span> Technology</div>
+<div class="legend-item"><span class="dot" style="background:#80a89a"></span> Science</div>
+<div class="legend-item"><span class="dot" style="background:#d6dce0"></span> Others</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- INVENTORY -->
+
+<div class="panel table-panel" id="inventory">
+
+<div class="panel-heading">
+<div>
+<h3>Recently Added Books</h3>
+<p>Manage and monitor your library collection</p>
+</div>
+<button class="view-btn" onclick="addBook()"><i class="fa-solid fa-plus"></i> Add New Book</button>
+</div>
+
+<div class="table-wrap">
+<table id="bookTable">
+<thead>
+<tr>
+<th>BOOK DETAILS</th>
+<th>BOOK ID</th>
+<th>CATEGORY</th>
+<th>STATUS</th>
+<th>QUANTITY</th>
+<th>ACTION</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><div class="book-cell"><div class="mini-cover" style="background:#e8ddc9">📘</div><div><strong>Atomic Habits</strong><span>James Clear</span></div></div></td>
+<td>BK-0012</td><td>Self Growth</td>
+<td><span class="status available">Available</span></td>
+<td>24</td>
+<td><button class="action" onclick="issue(this)"><i class="fa-solid fa-arrow-right-arrow-left"></i></button></td>
+</tr>
+
+<tr>
+<td><div class="book-cell"><div class="mini-cover" style="background:#dce9e9">📗</div><div><strong>Clean Code</strong><span>Robert C. Martin</span></div></div></td>
+<td>BK-0013</td><td>Technology</td>
+<td><span class="status issued">Issued</span></td>
+<td>12</td>
+<td><button class="action" onclick="issue(this)"><i class="fa-solid fa-arrow-right-arrow-left"></i></button></td>
+</tr>
+
+<tr>
+<td><div class="book-cell"><div class="mini-cover" style="background:#eee0e1">📕</div><div><strong>The Great Gatsby</strong><span>F. Scott Fitzgerald</span></div></div></td>
+<td>BK-0014</td><td>Fiction</td>
+<td><span class="status available">Available</span></td>
+<td>18</td>
+<td><button class="action" onclick="issue(this)"><i class="fa-solid fa-arrow-right-arrow-left"></i></button></td>
+</tr>
+
+<tr>
+<td><div class="book-cell"><div class="mini-cover" style="background:#e5e4f1">📙</div><div><strong>Introduction to Algorithms</strong><span>Thomas H. Cormen</span></div></div></td>
+<td>BK-0015</td><td>Computer Science</td>
+<td><span class="status overdue">Overdue</span></td>
+<td>8</td>
+<td><button class="action" onclick="issue(this)"><i class="fa-solid fa-arrow-right-arrow-left"></i></button></td>
+</tr>
+
+<tr>
+<td><div class="book-cell"><div class="mini-cover" style="background:#e2eddf">📒</div><div><strong>Psychology of Money</strong><span>Morgan Housel</span></div></div></td>
+<td>BK-0016</td><td>Finance</td>
+<td><span class="status available">Available</span></td>
+<td>15</td>
+<td><button class="action" onclick="issue(this)"><i class="fa-solid fa-arrow-right-arrow-left"></i></button></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- LOWER -->
+
+<div class="lower">
+
+<div class="panel" id="transactions">
+<div class="panel-heading">
+<div>
+<h3>Recent Activities</h3>
+<p>Latest library transactions</p>
+</div>
+<button class="view-btn">View All</button>
+</div>
+
+<div class="activity">
+<div class="activity-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+<div><strong>Book issued to Ahmed Khan</strong><p>Clean Code · Student ID: ST-2041</p></div>
+<time>10:42 AM</time>
+</div>
+
+<div class="activity">
+<div class="activity-icon"><i class="fa-solid fa-arrow-rotate-left"></i></div>
+<div><strong>Book returned by Sara Ali</strong><p>Atomic Habits · Student ID: ST-1082</p></div>
+<time>09:30 AM</time>
+</div>
+
+<div class="activity">
+<div class="activity-icon"><i class="fa-solid fa-user-plus"></i></div>
+<div><strong>New member registered</strong><p>Usman Ahmed · Student ID: ST-3092</p></div>
+<time>Yesterday</time>
+</div>
+
+<div class="activity">
+<div class="activity-icon"><i class="fa-solid fa-book"></i></div>
+<div><strong>New books added</strong><p>15 books added to Computer Science</p></div>
+<time>Yesterday</time>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-heading">
+<div>
+<h3>Quick Actions</h3>
+<p>Frequently used operations</p>
+</div>
+</div>
+
+<div class="quick-grid">
+<div class="quick" onclick="addBook()">
+<i class="fa-solid fa-book-medical"></i>
+<strong>Add New Book</strong>
+<span>Update inventory</span>
+</div>
+
+<div class="quick" onclick="addMember()">
+<i class="fa-solid fa-user-plus"></i>
+<strong>Add Member</strong>
+<span>Register student</span>
+</div>
+
+<div class="quick" onclick="issueBook()">
+<i class="fa-solid fa-arrow-right-arrow-left"></i>
+<strong>Issue Book</strong>
+<span>New transaction</span>
+</div>
+
+<div class="quick" onclick="showReport()">
+<i class="fa-solid fa-file-chart-column"></i>
+<strong>Generate Report</strong>
+<span>Library summary</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<footer>
+<span>© 2026 Libra Library Management System</span>
+<span>Designed for Academic Excellence</span>
+</footer>
+
+</main>
+</div>
+
+<script>
+
+// Date
+document.getElementById("date").innerText=
+new Date().toLocaleDateString("en-US",{weekday:"short",month:"long",day:"numeric",year:"numeric"});
+
+// Search books
+document.getElementById("globalSearch").addEventListener("input",function(){
+let value=this.value.toLowerCase();
+document.querySelectorAll("#bookTable tbody tr").forEach(row=>{
+row.style.display=row.innerText.toLowerCase().includes(value)?"":"none";
+});
+});
+
+// Issue and return
+function issue(button){
+let row=button.closest("tr");
+let status=row.querySelector(".status");
+
+if(status.innerText==="Available"){
+status.innerText="Issued";
+status.className="status issued";
+document.getElementById("issuedCount").innerText=
+Number(document.getElementById("issuedCount").innerText)+1;
+alert("Book issued successfully!");
+}else{
+status.innerText="Available";
+status.className="status available";
+document.getElementById("issuedCount").innerText=
+Math.max(0,Number(document.getElementById("issuedCount").innerText)-1);
+alert("Book returned successfully!");
+}
+}
+
+// Add book
+function addBook(){
+let name=prompt("Enter book title:");
+if(!name)return;
+
+let author=prompt("Enter author name:")||"Unknown Author";
+let tbody=document.querySelector("#bookTable tbody");
+let id="BK-"+String(tbody.rows.length+12).padStart(4,"0");
+
+let row=tbody.insertRow(0);
+row.innerHTML=`
+<td><div class="book-cell">
+<div class="mini-cover" style="background:#eee5d5">📘</div>
+<div><strong>${name.replace(/[<>&"]/g,"")}</strong><span>${author.replace(/[<>&"]/g,"")}</span></div>
+</div></td>
+<td>${id}</td>
+<td>General</td>
+<td><span class="status available">Available</span></td>
+<td>1</td>
+<td><button class="action" onclick="issue(this)"><i class="fa-solid fa-arrow-right-arrow-left"></i></button></td>`;
+
+document.getElementById("totalBooks").innerText=
+(Number(document.getElementById("totalBooks").innerText.replace(",",""))+1).toLocaleString();
+
+alert("Book added successfully!");
+}
+
+function addMember(){
+let name=prompt("Enter student name:");
+if(name)alert("Member registration demo: "+name);
+}
+
+function issueBook(){
+let name=prompt("Enter book title to issue:");
+if(name)alert("Issue request created for: "+name);
+}
+
+function showReport(){
+alert("Library Report\n\nTotal Books: "+document.getElementById("totalBooks").innerText+
+"\nBooks Issued: "+document.getElementById("issuedCount").innerText+
+"\nOverdue Books: 24");
+}
+
+</script>
 
 </body>
 </html>
