@@ -1,0 +1,23 @@
+{
+  "name": "libra-library-management-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx api.ts",
+    "start": "tsx api.ts",
+    "build": "tsc",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.7.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3"
+  }
+}
