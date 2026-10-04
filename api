@@ -1,0 +1,185 @@
+import express, { Request, Response } from "express";
+import cors from "cors";
+
+const app = express();
+const PORT = Number(process.env.PORT) || 4000;
+
+app.use(cors());
+app.use(express.json());
+
+type BookStatus = "Available" | "Issued" | "Overdue";
+
+interface Book {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  status: BookStatus;
+  quantity: number;
+}
+
+interface Member {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface Activity {
+  id: number;
+  action: string;
+  description: string;
+  time: string;
+}
+
+let books: Book[] = [
+  { id: "BK-0012", title: "Atomic Habits", author: "James Clear", category: "Self Growth", status: "Available", quantity: 24 },
+  { id: "BK-0013", title: "Clean Code", author: "Robert C. Martin", category: "Technology", status: "Issued", quantity: 12 },
+  { id: "BK-0014", title: "The Great Gatsby", author: "F. Scott Fitzgerald", category: "Fiction", status: "Available", quantity: 18 },
+  { id: "BK-0015", title: "Introduction to Algorithms", author: "Thomas H. Cormen", category: "Computer Science", status: "Overdue", quantity: 8 },
+  { id: "BK-0016", title: "Psychology of Money", author: "Morgan Housel", category: "Finance", status: "Available", quantity: 15 }
+];
+
+let members: Member[] = [
+  { id: "ST-2041", name: "Ahmed Khan", email: "ahmed@example.edu" },
+  { id: "ST-1082", name: "Sara Ali", email: "sara@example.edu" },
+  { id: "ST-3092", name: "Usman Ahmed", email: "usman@example.edu" }
+];
+
+let activities: Activity[] = [
+  { id: 1, action: "Book issued", description: "Clean Code · Student ID: ST-2041", time: "10:42 AM" },
+  { id: 2, action: "Book returned", description: "Atomic Habits · Student ID: ST-1082", time: "09:30 AM" },
+  { id: 3, action: "New member", description: "Usman Ahmed · Student ID: ST-3092", time: "Yesterday" },
+  { id: 4, action: "Books added", description: "15 books added to Computer Science", time: "Yesterday" }
+];
+
+let nextBookNumber = 17;
+let nextMemberNumber = 3093;
+
+function addActivity(action: string, description: string) {
+  activities.unshift({
+    id: Date.now(),
+    action,
+    description,
+    time: new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  });
+}
+
+// Health check
+app.get("/api/health", (_req: Request, res: Response) => {
+  res.json({ success: true, message: "Libra API is running" });
+});
+
+// Dashboard statistics
+app.get("/api/stats", (_req: Request, res: Response) => {
+  const issued = books.filter((b) => b.status === "Issued").length;
+  const overdue = books.filter((b) => b.status === "Overdue").length;
+
+  res.json({
+    success: true,
+    data: {
+      totalBooks: 12480 + Math.max(0, books.length - 5),
+      activeMembers: 3842 + Math.max(0, members.length - 3),
+      booksIssued: 856 + issued,
+      overdueBooks: 24 + overdue
+    }
+  });
+});
+
+// Books
+app.get("/api/books", (req: Request, res: Response) => {
+  const search = String(req.query.search || "").trim().toLowerCase();
+
+  const result = search
+    ? books.filter((book) =>
+        `${book.title} ${book.author} ${book.category} ${book.id}`
+          .toLowerCase()
+          .includes(search)
+      )
+    : books;
+
+  res.json({ success: true, data: result });
+});
+
+app.post("/api/books", (req: Request, res: Response) => {
+  const { title, author = "Unknown Author", category = "General", quantity = 1 } = req.body;
+
+  if (!title || typeof title !== "string") {
+    return res.status(400).json({
+      success: false,
+      message: "Book title is required"
+    });
+  }
+
+  const book: Book = {
+    id: `BK-${String(nextBookNumber++).padStart(4, "0")}`,
+    title: title.trim(),
+    author: String(author).trim() || "Unknown Author",
+    category: String(category).trim() || "General",
+    status: "Available",
+    quantity: Math.max(1, Number(quantity) || 1)
+  };
+
+  books.unshift(book);
+  addActivity("New books added", `${book.title} · ${book.quantity} copy/copies`);
+
+  res.status(201).json({ success: true, data: book });
+});
+
+app.patch("/api/books/:id/status", (req: Request, res: Response) => {
+  const book = books.find((item) => item.id === req.params.id);
+
+  if (!book) {
+    return res.status(404).json({ success: false, message: "Book not found" });
+  }
+
+  const nextStatus: BookStatus =
+    book.status === "Available" ? "Issued" : "Available";
+
+  book.status = nextStatus;
+
+  addActivity(
+    nextStatus === "Issued" ? "Book issued" : "Book returned",
+    `${book.title} · ${book.id}`
+  );
+
+  res.json({ success: true, data: book });
+});
+
+// Members
+app.get("/api/members", (_req: Request, res: Response) => {
+  res.json({ success: true, data: members });
+});
+
+app.post("/api/members", (req: Request, res: Response) => {
+  const { name, email = "" } = req.body;
+
+  if (!name || typeof name !== "string") {
+    return res.status(400).json({
+      success: false,
+      message: "Student name is required"
+    });
+  }
+
+  const member: Member = {
+    id: `ST-${nextMemberNumber++}`,
+    name: name.trim(),
+    email: String(email).trim()
+  };
+
+  members.push(member);
+  addActivity("New member registered", `${member.name} · Student ID: ${member.id}`);
+
+  res.status(201).json({ success: true, data: member });
+});
+
+// Activities
+app.get("/api/activities", (_req: Request, res: Response) => {
+  res.json({ success: true, data: activities.slice(0, 20) });
+});
+
+app.listen(PORT, () => {
+  console.log(`Libra API running at http://localhost:${PORT}`);
+});
